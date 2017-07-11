@@ -1,21 +1,3 @@
-const port = 3003
-
-const bodyParser = require('body-parser')
-const express = require ('express')
-const server = express()
-
-server.use(bodyParser.urlencoded({extended:true}))
-server.use(bodyParser.json())
-
-server.listen(port,function () {
-  console.log(`Backend running on port: ${port}.`)
-})
-
-server.use(function(req,res,next) {
-  console.log("meu md1");
-  next()
-})
-
-server.use(function(req,res,next) {
-  res.send("funcionou md 2")
-})
+const server = require('./config/server')
+require('./config/database')
+require('./config/rotas')(server)

@@ -3,3 +3,6 @@
   bottom: 10px;
   width: 100%;
 }
+.sidebar ul li{
+  margin-top: 10px;
+}

@@ -7,7 +7,7 @@ angular.module('financeApp').config([
       templateUrl:"dashboard/dashboard.html"
     }).state('billingCycle',{
       url:"/billingCycles",
-      templateUrl:'billingCycle/tabs.html'
+      templateUrl:'../billingCycle/tabs.html'
     })
 
     $urlRouterProvider.otherwise('/dashboard')

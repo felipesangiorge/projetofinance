@@ -6,15 +6,16 @@ angular.module('financeApp').component('valueBox',{
     text:'@',
     iconClass:'@',
   },
-  controller:[
+  controller: [
     'gridSystem',
     function (gridSystem) {
-      this.gridClasses= gridSystem.toCssClasses(this.grid)
+      this.gridClasses = gridSystem.toCssClasses(this.grid)
     }
   ],
-  template:`
+  template: `
+
   <div class="{{$ctrl.gridClasses}}">
-    <div class="small-box {{$ctrl.colorClass}}">
+    <div class="small-box {{ $ctrl.colorClass }}">
       <div class="inner">
         <h3>{{$ctrl.value}}</h3>
         <p>{{$ctrl.text}}</p>
@@ -24,5 +25,6 @@ angular.module('financeApp').component('valueBox',{
       </div>
     </div>
   </div>
+
   `
 })

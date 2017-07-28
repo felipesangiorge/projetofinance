@@ -1,4 +1,4 @@
-angular.module('financeApp').factory('gridSystem', [function () {
+angular.module('financeApp').factory('gridSystem', [ function () {
 
   function toCssClasses(numbers){
     const cols = numbers ? numbers.split(' ') : []
@@ -12,6 +12,6 @@ angular.module('financeApp').factory('gridSystem', [function () {
     return classes
   }
 
-  return{toCssClasses}
+  return { toCssClasses }
 
 }])

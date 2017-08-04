@@ -7,6 +7,7 @@
       grid:'@',
       placeholder:'@',
       type:'@',
+      model:'=',
     },
     controller: [
       'gridSystem',
@@ -19,7 +20,7 @@
         <div class="form-group">
           <label for="{{ $crtl.id }}">{{ $ctrl.label }}</label>
           <input id="{{ $crtl.id }}" class="form-control" placeholder="{{ $crtl.placeholder }}"
-          type="{{ $ctrl.type }}"/>
+          type="{{ $ctrl.type }}" ng-model="$ctrl.model"/>
         </div>
       </div>
       `

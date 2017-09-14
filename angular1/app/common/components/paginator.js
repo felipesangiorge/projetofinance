@@ -28,7 +28,7 @@
       }
     ],
     template:`
-    <ul ng-if="$ctrl.needPagination" class="pagination">
+    <ul ng-if="$ctrl.needPagination" class="pagination pagination-sm no-margin pull-right">
       <li ng-if="$ctrl.hasPrev">
         <a href="{{ $ctrl.url }}?page={{ $ctrl.current - 1}}">Anterior</a>
       </li>

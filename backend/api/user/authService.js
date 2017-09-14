@@ -29,6 +29,34 @@ const login = (req,res,next)=>{
       res.json({name,email,token})
     }else{
       return res.status(400).send({errors: ['Usuário/Senha inválidos']})
-    }    
+    }
   })
+}
+
+const validateToken = (req,res,next) =>{
+  const token = req.body.token ||''
+  jwt.verify(token, env.authSecret, function(err,decoded){
+    return res.status(200).send({valid: !err})
+  })
+}
+
+const singup = (req,res,next) => {
+  const name= req.body.name || ''
+  const email=req.body.email || ''
+  const password= req.body.password || ''
+  const confirmPassword = req.body.confirm_password || ''
+
+  if(!email.match(emailRegex)){
+    return res.status(400).send({errors: ['O e-mail informado está inválido']})
+  }
+
+  if(!password.match(passwordRegex)){
+    return res.status(400).send({errors: ["Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial, e tamanho entre 6 e 12"]})
+  }
+
+  const salt= bcrypt.genSaltSync()
+  const passwordHash = bcrypt.hasSync(password,salt)
+  if(!bcrypt.compareSync(confirmPassword, passwordHash)){
+    return res.status(400).send({errors: ['Senhas não conferem.']})
+  }
 }

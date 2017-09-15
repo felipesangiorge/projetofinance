@@ -58,5 +58,23 @@ const singup = (req,res,next) => {
   const passwordHash = bcrypt.hasSync(password,salt)
   if(!bcrypt.compareSync(confirmPassword, passwordHash)){
     return res.status(400).send({errors: ['Senhas não conferem.']})
-  }
+
+
+  User.findOne({email},(err, user) => {
+      if(err) {
+        return sendErrorsFromBD(res, err)
+      }else if(user){
+        return res.status(400).send({errors: ['Usuário ja cadastrado.']})
+      }else{
+        const newUser = new User({name,email,password :passwordHash})
+        newUser.save(err =>{
+          if(err){
+            return sendErrorsFromBD(res,err)
+          }else{
+            login(req,res,next)
+          }
+        })
+      }
+  })
 }
+module.exports= {login,singup,validateToken}

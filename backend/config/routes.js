@@ -12,7 +12,19 @@ module.exports = function(server){
     openApi.post('/singup',AuthService.singup)
     openApi.post('/validateToken',AuthService.validateToken)
 
-    //API ROUTERS
+    //Rotas protegidas por token
+
+    const protectedApi = express.Router()
+    server.use('/api',protectedApi)
+
+    protectedApi.use(auth)
+
+    const billingCycleService= require('../api/billingCycle/billingCycleService')
+    billingCycleService.register(protectedApi,'/billingCycles')
+
+    const billingSummaryService = require('../api/billingSummary/billingSummary')
+    protectedApi.route('billingSummary').get(billingSummaryService.getSummary)
+  /*  //API ROUTERS
     const router = express.Router()
     server.use('/api',router)
 
@@ -22,4 +34,7 @@ module.exports = function(server){
 
     const billingSummaryService = require('../api/billingSummary/billingSummary')
     router.route('/billingSummary').get(billingSummaryService.getSummary)
+    */
+
+
     }

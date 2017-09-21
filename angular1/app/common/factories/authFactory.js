@@ -19,7 +19,7 @@
         }
 
         function signup(user, callback) {
-            submit('signup', user, callback)
+            submit('singup', user, callback)
         }
 
         function login(user, callback) {

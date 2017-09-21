@@ -1,12 +1,12 @@
-const _=require('loadash')
+const _=require('lodash')
 const jwt = require ('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('./user')
 const env= require('../../.env')
 
 
-const emailRegex= /\S+@\S+\.\S+/
-const passwordRegex= /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,12})/
+const emailRegex = /\S+@\S+\.\S+/
+const passwordRegex = /(?=.*\d)/
 
 const sendErrorsFromBD= (res,dbErrors) =>{
   const errors= []
@@ -16,15 +16,15 @@ const sendErrorsFromBD= (res,dbErrors) =>{
 
 const login = (req,res,next)=>{
   const email = req.body.email || ''
-  const password req.body.password || ''
+  const password = req.body.password || ''
 
   User.findOne({email},(err,user) => {
     if(err){
       return sendErrorsFromBD(res,err)
     }else if(user && bcrypt.compareSync(password, user.password)){
-      const token = jwt.sing(user, env.authSecret, {
-        expiresIn: "1 day"
-      })
+      const token = jwt.sign(user, env.authSecret, {
+                expiresIn: "1 day"
+})
       const{name, email}=user
       res.json({name,email,token})
     }else{
@@ -46,6 +46,7 @@ const singup = (req,res,next) => {
   const password= req.body.password || ''
   const confirmPassword = req.body.confirm_password || ''
 
+
   if(!email.match(emailRegex)){
     return res.status(400).send({errors: ['O e-mail informado está inválido']})
   }
@@ -54,11 +55,12 @@ const singup = (req,res,next) => {
     return res.status(400).send({errors: ["Senha precisa ter: uma letra maiúscula, uma letra minúscula, um número, um caractere especial, e tamanho entre 6 e 12"]})
   }
 
-  const salt= bcrypt.genSaltSync()
-  const passwordHash = bcrypt.hasSync(password,salt)
+  const salt = bcrypt.genSaltSync()
+  const passwordHash = bcrypt.hashSync(password, salt)
+
   if(!bcrypt.compareSync(confirmPassword, passwordHash)){
     return res.status(400).send({errors: ['Senhas não conferem.']})
-
+  }
 
   User.findOne({email},(err, user) => {
       if(err) {
@@ -76,5 +78,6 @@ const singup = (req,res,next) => {
         })
       }
   })
+
 }
 module.exports= {login,singup,validateToken}

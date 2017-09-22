@@ -11,5 +11,20 @@ angular.module('financeApp').config([
     })
 
     $urlRouterProvider.otherwise('/dashboard')
+  }])
+
+.run([
+  '$rootScope',
+  '$http',
+  '$location',
+  '$window',
+  'auth',
+  function ($rootScope,$http,$location,$window,auth) {
+      validateUser()
+      $rootScope.$on('$locationChangeStart',() => validateUser())
+
+      function validateUser() {
+        console.log('Executando...')
+      }
   }
 ])

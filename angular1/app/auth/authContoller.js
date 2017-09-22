@@ -20,9 +20,9 @@
        auth.signup(vm.user, err => err ? msgs.addError(err) : msgs.addSuccess('Sucesso!'))
      }
 
-     vm.getUser = ()=>({name: 'Usuário MOCK', email:'mock@teste.com.br'})
+     vm.getUser = ()=> auth.getUser()
      vm.logout = () =>{
-       console.log('Logout...')
+       auth.logout(() => msgs.addSuccess('Sucesso!'))
      }
    }
 

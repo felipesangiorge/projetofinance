@@ -22,8 +22,8 @@ module.exports = function(server){
     const billingCycleService= require('../api/billingCycle/billingCycleService')
     billingCycleService.register(protectedApi,'/billingCycles')
 
-    const billingSummaryService = require('../api/billingSummary/billingSummary')
-    protectedApi.route('billingSummary').get(billingSummaryService.getSummary)
+    const billingSummaryService = require('../api/billingSummary/billingSummaryService')
+    protectedApi.route('/billingSummary').get(billingSummaryService.getSummary)
   /*  //API ROUTERS
     const router = express.Router()
     server.use('/api',router)

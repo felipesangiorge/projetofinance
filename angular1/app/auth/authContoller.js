@@ -21,9 +21,8 @@
      }
 
      vm.getUser = ()=> auth.getUser()
-     
      vm.logout = () =>{
-       auth.logout(() => $location.path('/')
+       auth.logout(() => $location.path('/'))
      }
    }
 

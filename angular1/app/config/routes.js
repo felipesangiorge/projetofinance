@@ -1,7 +1,8 @@
 angular.module('financeApp').config([
   '$stateProvider',
   '$urlRouterProvider',
-  function($stateProvider,$urlRouterProvider){
+  '$httpProvider',
+  function($stateProvider,$urlRouterProvider,$httpProvider){
     $stateProvider.state('dashboard',{
       url:"/dashboard",
       templateUrl:"dashboard/dashboard.html"
@@ -9,8 +10,8 @@ angular.module('financeApp').config([
       url:"/billingCycles?page",
       templateUrl:'../billingCycle/tabs.html'
     })
-
-    $urlRouterProvider.otherwise('/dashboard')
+    $httpProvider.interceptors.push('handleResponseError')
+    //$urlRouterProvider.otherwise('/dashboard')
   }])
 
 .run([
@@ -29,11 +30,23 @@ angular.module('financeApp').config([
         const isAuthPage = $window.location.href.includes(authPage)
 
         if(!user && !isAuthPage){
+
           $window.location.href = authPage
+
         }else if(user && !user.isValid){
-          user.isValid = true
-          $http.defaults.headers.common.Authorization = user.token
-          isAuthPage ? $window.location.href = '/' : $location.path('/dashboard')
+
+          auth.validateToken(user.token, (err,valid) => {
+
+            if(!valid){
+
+              $window.location.href = authPage
+            }else{
+              user.isValid = true
+              $http.defaults.headers.common.Authorization = user.token
+              isAuthPage ? $window.location.href= '/' : $location.path('/dashboard')
+            }
+
+          })
         }
       }
   }

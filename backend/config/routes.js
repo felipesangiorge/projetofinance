@@ -19,6 +19,9 @@ module.exports = function(server){
 
     protectedApi.use(auth)
 
+    const AttendenceCycleService= require('../api/attendenceCycle/AttendenceCycleService')
+    AttendenceCycleService.register(protectedApi,'/attendenceCycles')
+
     const billingCycleService= require('../api/billingCycle/billingCycleService')
     billingCycleService.register(protectedApi,'/billingCycles')
 

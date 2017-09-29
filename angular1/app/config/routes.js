@@ -9,6 +9,9 @@ angular.module('financeApp').config([
     }).state('billingCycle',{
       url:"/billingCycles?page",
       templateUrl:'../billingCycle/tabs.html'
+    }).state('attendenceCycle',{
+      url:"/attendenceCycle?page",
+      templateUrl:'../attendenceCycle/tabs.html'
     })
     $httpProvider.interceptors.push('handleResponseError')
     //$urlRouterProvider.otherwise('/dashboard')
